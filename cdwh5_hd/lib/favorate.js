@@ -176,12 +176,8 @@ function favorate(option) {
 
 			syncFavorateList({
 				cityid: option.cityid,
-				complete: function() {
-					fetchBusList();
-				},
+
 				success: function(data) {
-					//用户不登录也能看到线路，所以success = 0,1,2都要fetchBusList(),
-					fetchBusList();
 
 					if (data.success == 1) {
 						//开始收藏	
