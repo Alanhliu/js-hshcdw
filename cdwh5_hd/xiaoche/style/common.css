@@ -1,0 +1,158 @@
+body
+	{
+		width: 100%;
+		min-width: 360px;
+		background-color: #f4f4f4;
+		font-family: '微软雅黑';
+	}
+
+*{
+/*	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;*/
+}
+
+textarea
+{
+	border: none;
+}
+
+	.hd
+	{
+		height: 44px;
+		position: relative;
+		background-color: #6296bb;
+		color: #FFF;
+		text-align: center;
+	}
+
+	.hd .hd-title
+	{
+		height: 44px;
+		line-height: 44px;
+		font-weight: 400;
+		font-size: 16px;
+	}
+
+	.a-back
+	{
+		position: absolute;
+		left: 10px;
+		top: 13px;
+		width: 30px;
+		height: 20px;
+		font-weight: 600;
+		text-decoration: none;
+		color: #FFF;
+	}
+
+	.brick-sm
+	{
+		height: 10px;
+	}
+
+	.brick-tiny
+	{
+		height: 1px;
+	}
+
+	.ctnr
+	{
+		background-color: #f1f1f1;
+	}
+
+	.font-size-1
+	{
+		font-size: 12px;	
+	}
+
+	.font-size-2
+	{
+		font-size: 14px;	
+	}
+	.font-size-3
+	{
+		font-size: 16px;
+	}
+
+	.padding-1
+	{
+		padding: 5px;
+	}
+	.padding-2
+	{
+		padding: 10px;
+	}
+	.padding-3
+	{
+		padding: 15px;
+	}
+	.padding-4
+	{
+		padding: 25px;
+	}
+
+	.margin-1
+	{
+		margin: 5px;
+	}
+	.margin-2
+	{
+		margin: 10px;
+	}
+	.margin-3
+	{
+		margin: 15px;
+	}
+	.margin-4
+	{
+		margin: 25px;
+	}
+
+	.font-white
+	{
+		color: #FFF;
+	}
+
+	.font-gray-1
+	{
+		color: #bfbfbf;
+	}
+	.font-gray-2
+	{
+		color: #aaaaaa;
+	}
+	.font-gray-3
+	{
+		color: #666666;
+	}
+
+	.height-1
+	{
+		height: 1px;
+	}
+
+	.height-2
+	{
+		height: 10px;
+	}
+
+	.height-3
+	{
+		height: 40px;
+	}
+
+	.height-4
+	{
+		height: 80px;
+	}
+
+	.height-5
+	{
+		height: 120px;
+	}
+
+	.center
+	{
+		text-align: center;
+	}

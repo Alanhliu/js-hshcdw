@@ -1,0 +1,80 @@
+@charset "UTF-8";
+/**
+ * 
+ * @authors liuhao (liuhao257@163.com)
+ * @date    2017-03-06 10:34:41
+ * @version $Id$
+ */
+
+html,body,ul,li,tr,td,table {
+	padding: 0;
+	margin: 0;	
+/*	position: relative;
+    height: 100%;*/
+}
+
+body {
+	background-color: #F0F0F0;
+}
+
+li {
+	list-style: none;
+}
+
+/*清除浮动*/
+.clearfloat {
+	clear: both;
+}
+
+.separator {
+	height: 1px;
+	width: 100%;
+	background-color: #F0F0F0;
+}
+
+/*Navigation Header*/
+#navigation_header {
+	position: fixed;
+	top: 0px;
+	width: 100%;
+	height: 44px;
+	background: white;
+	display: inline-block;
+}
+
+#navigation_header .back {
+	max-height: 25px;
+	max-width: 25px;
+	float: left;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+#navigation_header .title {
+	float: left;
+	margin-top: 12px;
+	margin-left: 10px;
+}
+
+#navigation_header .right {
+	float: right;
+	max-height: 20px;
+	max-width: 20px;
+	margin-top: 13px;
+	margin-right: 10px;
+}
+
+#navigation_header .right_second {
+	float: right;
+	max-height: 20px;
+	max-width: 20px;
+	margin-top: 13px;
+	margin-right: 10px;
+}
+
+#navigation_header .bottomline {
+	/*height: 1px;
+	margin-left: 0px;
+	margin-right: 0px;
+	background-color: red;*/
+}

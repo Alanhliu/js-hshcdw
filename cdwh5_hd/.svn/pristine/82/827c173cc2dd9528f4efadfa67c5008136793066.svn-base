@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>首页</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=0">
+<link href="base.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="Home.css">
+</head>
+<body>
+    <div id="navigation_header">
+    	<img class="back" src="./images/back.png"/>
+    	<p class="title">首页</p>
+    </div>
+
+	<ul id="grid_list">
+		<li>
+			<div class="grid_list_div div1">
+				<span>线路搜索</span>
+				<img src="./images/img_grid_1@2x.png">
+			</div>
+		</li>
+		<li>
+			<div class="grid_list_div div2">
+				<span>到站查询</span>
+				<img src="./images/img_grid_2@2x.png">
+			</div>
+		</li>
+	</ul>
+
+	<!-- <script type="text/javascript">
+		function showAlert() {
+			var x = javascript.sayHello('你好!');
+			alert(x);
+		}
+	</script>
+
+	<p>sayHello
+		<button id="opennew" type="button" onclick="showAlert()">问候0
+		</button>
+	</p>
+
+	<p>sayHello
+		<button id="opennew" type="button" onclick="javascript.sayHello('你好!')">问候1
+		</button>
+	</p>
+
+    <p>sayHelloTo
+    	<button id="opennew2" type="button" onclick="javascript.sayHelloToWithGreeting('zhoushuai', 'Good morning!')">问候2
+        </button>
+    </p> -->
+
+	<script type="text/javascript" src="./lib/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="Home.js"></script>
+</body>
+</html>

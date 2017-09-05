@@ -1,0 +1,46 @@
+@charset "UTF-8";
+/**
+ * 
+ * @authors liuhao (liuhao257@163.com)
+ * @date    2017-03-29 09:54:08
+ * @version $Id$
+ */
+
+#grid_list {
+	margin-top: 44px;
+}
+
+#grid_list li {
+	float: left;
+	height: 140px;
+	width: 50%;
+}
+
+#grid_list .grid_list_div {
+	height: 120px;
+	margin: 10px;
+}
+
+#grid_list .grid_list_div span {
+	display: block;
+	color: white;
+	margin-left: 31%;
+	padding-top: 15px;
+}
+
+#grid_list .div1 {
+	margin-right: 5px;
+	background-color: #46B3CE;
+}
+
+#grid_list .div2 {
+	margin-left: 5px;
+	background-color: #FB7D60;
+}
+
+#grid_list img {
+	width: 50px;
+	height: 50px;
+	margin-top: 15px;
+	margin-left: 35%;
+}

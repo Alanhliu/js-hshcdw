@@ -1,0 +1,70 @@
+@charset "UTF-8";
+/**
+ * 
+ * @authors liuhao (liuhao257@163.com)
+ * @date    2017-03-06 10:34:41
+ * @version $Id$
+ */
+
+#bus_list {
+	margin-top:64px;
+}
+
+#bus_list li {
+	height: auto;
+	line-height: 100%;
+	background-color: white;
+}
+
+#bus_list li a {
+	font-size: 18px;
+	color: black;
+}
+
+#bus_list .bus {
+	/*margin-top不起作用，padding-top却好用，why?*/
+	/*margin-top: 12px;*/
+	padding-top: 12px;
+	margin-left: 10px;
+}
+
+#bus_list .star {
+	float: right;
+	margin-right: 8px;
+	margin-top: -32px;
+	height: 30px;
+	width: 30px;
+}
+
+#bus_list .bus_list_item_bottom_container {
+	height: 20px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+#bus_list .station {
+	float: left;
+	text-align:left;
+	min-width: 20px;
+}
+
+#bus_list .distance {
+	float: left;
+	margin-left: 15px;
+    text-align:center;
+}
+
+#bus_list .minute {
+	 float: right;
+ 	 text-align:right;
+}
+
+#bus_list .bottom_text {
+	color: #7A7A7A;
+	font-size: 15px;
+	margin-top: 6px;
+}
+
+#bus_list .bottom_a {
+
+}

@@ -1,0 +1,43 @@
+{
+  "pageNum": 1,
+  "pageSize": 50,
+  "rows": [
+    {
+      "bus": {
+        "busId": "160193",
+        "cost": 2,
+        "distance": 330,
+        "lonlat": [
+          123.36927,
+          41.77629
+        ],
+        "num": 2,
+        "scale": 0.06521739130434782
+      },
+      "name": "203路(沈阳北站-艳粉新村)",
+      "rid": "83842fbbc12e63bf8505bfe6",
+      "shortName": "203路",
+      "uid": "63f498e486e315b325e0a0e6"
+    },
+    {
+      "bus": {
+        "busId": "160176",
+        "cost": 1,
+        "distance": 236,
+        "lonlat": [
+          123.36383,
+          41.77856
+        ],
+        "num": 1,
+        "scale": 0.25
+      },
+      "name": "203路(艳粉新村-沈阳北站)",
+      "rid": "63f498e486e315b325e0a0e6",
+      "shortName": "203路",
+      "uid": "83842fbbc12e63bf8505bfe6"
+    }
+  ],
+  "status": 200,
+  "timeStamp": 0,
+  "total": 2
+}

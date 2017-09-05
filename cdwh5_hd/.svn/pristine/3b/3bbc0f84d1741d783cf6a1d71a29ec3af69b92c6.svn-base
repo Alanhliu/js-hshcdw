@@ -1,0 +1,53 @@
+@charset "UTF-8";
+/**
+ * 
+ * @authors liuhao (liuhao257@163.com) 
+ * @date    2017-03-06 10:34:41
+ * @version $Id$
+ */
+
+
+/*Station List*/
+#station_list {
+	margin-top: 44px;
+}
+
+#station_list li {
+	height: 80px;
+}
+
+#station_list .station_list_item_left_container{
+	float: left;
+	height: 80px;
+	margin-left: 10px;
+	margin-right: 10px;
+	max-width: 80%;
+}
+
+#station_list .station {
+	line-height: 20px;
+	color: black;
+}
+
+#station_list .bus {
+	line-height: 20px;
+	color: #7A7A7A;
+	font-size: 13px; 
+
+	/*多余部分省略显示*/
+	width: 240px;
+    height: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+}	
+
+#station_list .distance {
+	margin-top: 32px;
+	line-height: 20px;
+	float: right;
+	color: #656565;
+	font-size: 15px;
+	margin-right: 10px;
+}
+

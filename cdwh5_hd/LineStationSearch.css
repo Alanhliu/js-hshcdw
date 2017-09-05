@@ -1,0 +1,92 @@
+@charset "UTF-8";
+/**
+ * 
+ * @authors liuhao (liuhao257@163.com)
+ * @date    2017-03-29 14:02:54
+ * @version $Id$
+ */
+
+#navigation_header .right {
+	float: right;
+	margin-right: 5px;
+	width: 100px;
+	height: 30px;
+	max-height: 50px;
+	max-width: 100px;
+	margin-top: 7px;
+}
+
+#navigation_header .right .btn {
+	height: 33px;
+	width: 50px;
+}
+
+#navigation_header #search_input {
+	margin-top: 7px;
+	height: 30px;
+	margin-left: 15px;
+	width: 80%;
+	outline-style: none;
+	border-style: none;
+	border: solid 1px #E9E9E9;
+	border-radius:10px;
+	text-indent: 5px;
+}
+
+#line_result {
+	margin-top: 44px;
+}
+
+.line_station_result {
+	/*background-color: red;*/
+}
+
+.line_station_header {
+	height: 40px;
+}
+
+.line_station_header p {
+	line-height: 40px;
+	margin-left: 10px;
+	margin-top: 10px;
+	color: #969696;
+}
+
+.line_station_list li {
+	height: 50px;
+	background-color: white;
+}
+
+.line_station_list .icon {
+	float: left;
+	margin-top: 13px;
+	margin-left: 10px;
+	height: 24px;
+	width: 24px;
+}
+
+.line_station_list .text {
+	margin-top: 15px;
+	margin-left: 10px;
+	height: 20px;
+	float: left;
+
+	/*怎么适配屏幕宽呢*/
+	width: 270px;
+    height: 20px;
+    /*多余部分省略显示*/
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+}
+
+#blank_holder {
+	margin-top: 100px;
+	text-align: center;
+}
+
+#blank_holder img {
+	margin: 0 auto;
+	height: 180px;
+	width: 288px;
+}

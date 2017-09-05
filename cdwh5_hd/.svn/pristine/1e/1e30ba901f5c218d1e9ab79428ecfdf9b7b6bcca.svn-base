@@ -1,0 +1,22 @@
+/**
+ * 
+ * @authors liuhao (liuhao257@163.com)
+ * @date    2017-03-29 11:00:03
+ * @version $Id$
+ */
+
+window.onload = function() {
+	$('.back').click(function() {
+		window.history.back(-1); 
+	});
+
+	$('.div1').click(function(event) {
+		window.location.href='LineStationSearch.html';
+	});
+
+	$('.div2').click(function(event) {
+		window.location.href='QueryStation.html';
+	});
+
+	
+}

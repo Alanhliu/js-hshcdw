@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>地图显示</title>
+
+
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=n20blSeYOhgy3w6qUlaumTqOyWbUMsL6"></script>
+
+<link rel="stylesheet" type="text/css" href="base.css">
+<link rel="stylesheet" type="text/css" href="BusOnMap.css">
+<link rel="stylesheet" type="text/css" href="./lib/toastr.css">
+
+</head>
+<body>
+	<div id="navigation_header">
+    	<img class="back" src="./images/back.png"/>
+    	<p class="title">车辆位置</p>
+    	<img class="right" src="./images/icon_nav_bus@2x.png"/>
+    	<img class="right_second star" src="./images/star_empty.png"/>
+    </div>
+
+    <div id="l-map"></div>
+
+    <script type="text/javascript" src="./lib/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="./lib/native-tool.js"></script>
+    <script type="text/javascript" src="./lib/tool.js"></script>
+    <script type="text/javascript" src="./lib/toastr.min.js"></script>
+    <script type="text/javascript" src="./lib/favorate.js"></script>
+    <script type="text/javascript" src="BusOnMap.js"></script>
+</body>
+</html>

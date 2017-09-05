@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>我的收藏</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=0">
+<link href="base.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="QueryBus.css">
+<link rel="stylesheet" type="text/css" href="./lib/toastr.css">
+</head>
+<body>
+    <div id="navigation_header">
+    	<img class="back" src="./images/back.png"/>
+    	<p class="title">我的收藏</p>
+        <div class="bottomline"></div>
+    </div>
+
+    <ul id="bus_list">
+    	<!-- <li class="bus_li">
+            <p class="bus">150站</p>
+            <span>
+                <img class="star" src="./images/star_full.png">
+            </span>
+            <div class="bus_list_item_bottom_container">
+                <p class="bottom_text station">1站</p>
+                <p class="bottom_text distance">141米</p>
+                <p class="bottom_text minute"><a>2</a>分</p>
+            </div>
+            <div class="clearfloat"/>
+            <div class="separator"/>
+        </li> -->
+        <!-- <li class="bus_li">
+            <p class="bus">150路</p>
+            <span>
+                <img class="star" src="./images/star_full.png">
+            </span>
+            <div class="bus_list_item_bottom_container">
+                <p class="bottom_text station" style="font-size: 14px;">彩霞街公铁桥</p>
+            </div>
+            <div class="clearfloat"/>
+            <div class="separator"/>
+        </li>
+        <li class="bus_li">
+            <p class="bus">154路</p>
+            <span>
+                <img class="star" src="./images/star_full.png">
+            </span>
+            <div class="bus_list_item_bottom_container">
+                <p class="bottom_text station" style="font-size: 14px;">彩霞街公铁桥</p>
+            </div>
+            <div class="clearfloat"/>
+            <div class="separator"/>
+        </li>
+        <li class="bus_li">
+            <p class="bus">188路</p>
+            <span>
+                <img class="star" src="./images/star_full.png">
+            </span>
+            <div class="bus_list_item_bottom_container">
+                <p class="bottom_text station" style="font-size: 14px;">彩霞街公铁桥</p>
+            </div>
+            <div class="clearfloat"/>
+            <div class="separator"/>
+        </li> -->
+    </ul>
+
+    <script type="text/javascript" src="./lib/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="./lib/spin.js"></script>
+    <script type="text/javascript" src="./lib/jquery.md5.js"></script>
+    <script type="text/javascript" src="./lib/native-tool.js"></script>
+    <script type="text/javascript" src="./lib/toastr.min.js"></script>
+    <script type="text/javascript" src="./lib/favorate.js"></script>
+    <script type="text/javascript" src="./lib/tool.js"></script>
+    <script>
+        window.onload = function() {
+            var param = parseURL();
+            // var sid = param["sid"];
+            
+            $('.back').click(function() {
+                window.history.back(-1); 
+            });
+
+            var token = native_getToken();
+            var cityid = window.localStorage.getItem('zhcx_cid');
+
+            jQuery.ajax({
+                url: 'http://192.168.8.104:8082/zhcx/fav_list',
+                type: 'POST',
+                dataType: 'jsonp',
+                jsonp: 'jsoncallback',
+                data: 
+                {
+                    token: token,
+                    cityid: cityid
+                },
+                complete: function(xhr, textStatus) {
+
+                },
+                success: function(data, textStatus, xhr) {
+                    if (data.success == "1") 
+                    {
+                        //填充收藏列表到页面
+                        var htmlList = "";
+                        for (var i = 0; i < data.fav_list.length; i++) {
+                            var line_id = data.fav_list[i].line_id;
+                            var station_id = data.fav_list[i].station_id;
+                            var line_name = data.fav_list[i].line_name;
+                            var station_name = data.fav_list[i].station_name;
+
+                            var htmlItem = '<li class="bus_li">            <p class="bus">' + line_name + '</p>            <span>                <img class="star" src="./images/star_full.png">            </span>            <div class="bus_list_item_bottom_container">                <p class="bottom_text station" style="font-size: 14px;">' + station_name + '</p>            </div>            <div class="clearfloat"/>            <div class="separator"/>        </li>';
+
+                            htmlList += htmlItem;
+                            $('#bus_list').html(htmlList);
+                        }
+
+
+                    } 
+                    else if (data.success == "2") 
+                    {
+                        //token失效，跳转至登录页
+                        native_showLoginScene();
+                    }
+                    else 
+                    {
+                        //其他错误
+                    }
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+
+
+            //线路item点击事件
+            $('li').click(function() {
+                var pass = passes[$(this).index()];
+                // sid对应返回的uid(站点id)
+                // var sid = pass.uid;
+
+                var filterarray = $.grep(passes,function(item,i){
+                        // return item.rid != pass.rid && item.name.indexOf(pass.shortName) >= 0;
+                        return item.rid != pass.rid && item.shortName == pass.shortName;
+                    });
+
+                var lid = '';
+                var reverse = '';
+
+                if (filterarray.length > 0) {
+
+                    var reversePass = filterarray[0];
+                    lid = reversePass.rid;//lid对应返回的rid(线路id)
+                    reverse = 'no';
+                } else {
+                    lid = pass.rid;
+                    reverse = 'yes';
+                }
+
+                var sid = '';
+                try
+                {
+                    sid = $.md5(stationName);
+                }
+                catch(e)
+                {
+                    alert(e);
+                }
+                
+                var shortName = pass.shortName;
+                var name = pass.name;
+
+                //百度搜索108路时搜不到，108能搜到
+                if (shortName == "108路") {
+                    shortName = "108";
+                }
+
+                sessionStorage.shortName = shortName;
+                sessionStorage.name = name;
+
+                window.location.href='xiaoche/?lid='+lid+'&sid='+sid+'&reverse='+reverse;
+            });
+
+                //收藏
+                $('.star').click(function(event) {
+                    event.stopPropagation(); 
+
+                    var thisStar = $(this);
+
+                    var li = $(this).parents(".bus_li")[0];
+                    var pass = passes[$(li).index()];
+                    // alert($(li).index());
+                    var lid = pass.rid;
+                    var lname = pass.name;
+                    var sid = '';
+                    try
+                    {
+                        sid = $.md5(stationName);
+                    }
+                    catch(e)
+                    {
+                        alert(e);
+                    }
+
+                    var sname = stationName;
+
+                    favorate({
+                        cityid: cityid,
+                        lid: lid,
+                        sid: sid,
+                        lname: lname,
+                        sname: sname,
+                        success: function(bt) {
+                            if (bt == "1") {    
+                                $(thisStar).attr('src','./images/star_empty.png');
+                            } else {
+                                $(thisStar).attr('src','./images/star_full.png');
+                            }
+                        },
+                        error: function(errorThrown) {
+                            alert("error:"+errorThrown);
+                        }
+                    })
+                });
+            }
+        }
+    </script>
+</body>
+</html>

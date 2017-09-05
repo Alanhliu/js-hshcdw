@@ -1,0 +1,847 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+
+    <title>三辆小车</title>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=n20blSeYOhgy3w6qUlaumTqOyWbUMsL6"></script>
+    <link rel="stylesheet" href="style/waitMe/waitMe.min.css">
+    <link rel="stylesheet" href="style/common.css">
+    <!-- <link href="style/bootstrap.min.css?v=3.3.6" rel="stylesheet"> -->
+    <!-- <link href="style/font-awesome.css?v=4.4.0" rel="stylesheet"> -->
+    <!-- <link href="style/animate.css" rel="stylesheet"> -->
+    <link href="style/style.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    
+    <style>
+        body
+        {
+            background-image: url(res/bk2.jpg);
+
+        }
+
+        .container
+        {
+            text-align: center;
+            margin-left: 0px;
+        }
+
+        .station
+        {
+            text-align: right;
+            width: 100px;
+            padding-top: 25px;
+            font-size: 14px;
+            margin-right: -10px;
+        }
+
+        .road
+        {
+            text-align: right;
+            margin-right: -10px;
+            background-image: url(res/road-v.png);
+            background-repeat: no-repeat;
+        }
+
+        .road img
+        {
+            width: 70px;
+            height: 40px;
+        }
+
+        .bus_a
+        {
+            font-size: 8px;
+            color: #666;
+        }
+
+        .bus_b
+        {
+            font-size: 8px;
+            color: #666;
+        }
+
+        .bus_c
+        {
+            font-size: 8px;
+            color: #666;
+        }
+
+        .bus_a img
+        {
+            width: 40px;
+        }
+        .bus_b img
+        {
+            width: 40px;
+        }
+        .bus_c img
+        {
+            width: 40px;
+        }
+
+        .bus-ruler
+        {
+            border-right: 2px dashed #bcbcbc;
+        }
+
+        .header
+        {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            height: 45px;
+            background-color: #fff;
+            line-height: 45px;
+            padding-right: 10px;
+            padding-left: 10px;
+            font-size: 12px;
+            text-align: center;
+            z-index: 99;
+            font-size: 16px;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <!-- 头和导航 -->
+    <!-- <div class="hd">
+        <a class="a-back" href="#"><span class="glyphicon glyphicon-chevron-left"></span></a>
+        <span class="hd-title">214路</span>
+        <span style="float: right;margin-top: 10px;margin-right: 13px;">地图</span>
+    </div> -->
+
+    <!-- 用于接收百度Api的数据 -->
+    <div style="display: none;">
+        <div id="allmap"></div>
+        <div id="r-result"></div>
+    </div>
+    
+    <div class="header">
+        <span>实时位置</span>
+        <span style="float: right"><a id="map_btn" href=""><img style="height: 20px" src="res/map.png"></a></span>
+        <span style="float: left">
+            <a href="javascript:history.back(-1)">
+                <img style="height: 25px; margin-top: -5px" src="res/back.png">
+            </a>
+        </span>
+
+    </div>
+    <div class="container">
+        <table id="wholeTable" style="min-width: 200px;">
+            <!-- <tr>
+                <th></th>
+                <td class="road"><img src="res/road-v.png"></td>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <td class="station">
+                    <button id="station_0" class="btn btn-info dim btn-large-dim" type="button">
+                        <i class="fa fa-warning"></i>二十一世纪
+                    </button>
+                </td>
+                <td class="road"><img src="res/road-s-v.png"></td>
+                <td class="bus_a"></td>
+                <td class="bus_b"></td>
+                <td class="bus_c"></td>
+            </tr>
+            <tr>
+                <td class="station"></td>
+                <td class="road"><img src="res/road-v.png"></td>
+                <td class="bus_a"></td>
+                <td class="bus_b"></td>
+                <td class="bus_c"></td>
+            </tr>
+            <tr>
+                <td class="station">
+                    <button id="station_1" class="btn btn-info dim btn-large-dim" type="button">
+                        <i class="fa fa-warning"></i>奥体中心
+                    </button>
+                </td>
+                <td class="road"><img src="res/road-s-v.png"></td>
+                <td class="bus_a"><img src="res/bus-cartoon2.gif"></td>
+                <td class="bus_b"></td>
+                <td class="bus_c"></td>
+            </tr>
+            <tr>
+                <td class="station"></td>
+                <td class="road"><img src="res/road-v.png"></td>
+                <td class="bus_a"></td>
+                <td class="bus_b"><img src="res/bus-cartoon2.gif"></td>
+                <td class="bus_c"></td>
+            </tr>
+            <tr>
+                <td class="station">
+                    <button class="btn btn-info dim btn-large-dim" type="button">
+                        <i class="fa fa-warning"></i>五里河
+                    </button>
+                </td>
+                <td class="road"><img src="res/road-s-v.png"></td>
+                <td class="bus_a"></td>
+                <td class="bus_b"></td>
+                <td class="bus_c"></td>
+            </tr>
+            <tr>
+                <td class="station"></td>
+                <td class="road"><img src="res/road-v.png"></td>
+                <td class="bus_a"></td>
+                <td class="bus_b"></td>
+                <td class="bus_c"></td>
+            </tr>
+            <tr>
+                <td class="station">
+                    <button class="btn btn-info dim btn-large-dim" type="button">
+                        <i class="fa fa-warning"></i>工业展览馆
+                    </button>
+                </td>
+                <td class="road"><img src="res/road-s-v.png"></td>
+                <td class="bus_a"></td>
+                <td class="bus_b"></td>
+                <td class="bus_c"><img src="res/bus-cartoon2.gif"><br><span>距离:102米</span><br><span>耗时:1分钟</span></td>
+            </tr>
+            <tr>
+                <td class="station"></td>
+                <td class="road"><img src="res/road-v.png"></td>
+                <td class="bus_a"></td>
+                <td class="bus_b"></td>
+                <td class="bus_c"></td>
+            </tr>
+            <tr>
+                <td class="station">
+                    <button class="btn btn-info dim btn-large-dim" type="button">
+                        <i class="fa fa-warning"></i>青年公园
+                    </button>
+                </td>
+                <td class="road"><img src="res/road-s-v.png"></td>
+                <td class="bus_a"></td>
+                <td class="bus_b"></td>
+                <td class="bus_c"></td>
+            </tr> -->
+        </table>
+        <div id="ruler" style="display:none; width: 240px;height: 1px;border-bottom:2px dashed #000000;">
+        </div>
+
+
+        <div id="bus_ruler_0" class="bus-ruler"></div>
+        <div id="bus_ruler_1" class="bus-ruler"></div>
+        <div id="bus_ruler_2" class="bus-ruler"></div>
+
+    </div>
+    <script src="script/jquery-1.12.1.min.js"></script>
+    <script src="script/waitMe/waitMe.min.js"></script>
+    <script type="text/javascript" src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="script/jquery.md5.js"></script>
+    <script src="script/util.js"></script>
+    <script>
+        var Request = GetRequest();
+
+        //2个参数
+        var rid = Request['lid'];
+        var sid = Request['sid'];
+        var is_reversed = Request['reverse'];
+        // alert('sid: ' + sid);
+        // var key = '154';
+        var key = sessionStorage.shortName;
+
+        //针对指定的问题线路进行自定义搜索
+        if (key == "108路") {
+            key = "108";
+        }
+
+        // var rid = "0f4acf3a16104a0cb44f54d1";
+        // var rid = "ced52cee92e17dabc71b75d1";
+
+        //设置切换地图按钮的链接
+        var map_url = "../BusOnMap.html?lid=" + rid + "&sid=" + sid;
+        $('#map_btn').attr('href', map_url);
+
+        var currBusDomId = "";
+        var autoFreshTimer = null;
+        
+
+        //固定站点标尺
+        $.fn.extend({
+          fixRuler: function (dom) {
+              return this.each(function() {
+                  // var top = (($(window).height() - $(this).outerHeight()) / 2) ;
+                  // var top = $(window).height() /2.7;
+                  // var top = $(document).height() / 2.7;
+                  var top = dom.offset().top;
+                  var left = dom.offset().left + dom.width() + 25;
+                  $(this).css({position:'absolute', margin:0, top: (top > 0 ? top : 0)+'px', left: (left > 0 ? left : 0)+'px'});
+              });
+          }
+        });
+
+        //固定小车标尺
+        $.fn.extend({
+          fixBusRuler: function (dom) {
+              return this.each(function() {
+                  // var top = (($(window).height() - $(this).outerHeight()) / 2) ;
+                  // var top = $(window).height() /2.7;
+                  // var top = $(document).height() / 2.7;
+                  try
+                  {
+                      var top = $('#ruler').offset().top + 5;
+                      var left = dom.offset().left + 18;
+                      var height = dom.offset().top - $('#ruler').offset().top;
+                      if (height < 0) {
+                        dom.css('opacity', '0.4');
+                      }
+                      else
+                      {
+                        dom.css('opacity', '1');
+                      }
+                      $(this).css({position:'absolute', margin:0, top: (top > 0 ? top : 0)+'px', left: (left > 0 ? left : 0)+'px',height: height + 'px'});
+                      $(this).show();
+                  }
+                  catch(e)
+                  {
+                    
+                  }
+                  
+              });
+          }
+        });
+
+        //读取该路线所有站名，并显示
+        var listStationInfos = [];
+        // 百度地图API功能
+        var map = new BMap.Map("allmap");            // 创建Map实例
+        var city = "沈阳";
+        //map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);
+        map.centerAndZoom(city,11);
+        //BusList对象
+        var tempVar;
+        //路线正反index;
+        var bdStationListIndex = 0;
+
+        //设置allmap
+    //     var height = $(window).height() - 44;
+    //     $("#allmap").css({
+    //     'width':'100%',
+    //     'height': height+'px',
+    //     'display': 'none'
+    // });
+
+
+        loading();
+        var busline = new BMap.BusLineSearch(map,{
+            renderOptions:{map:map,panel:"r-result"},
+                onGetBusListComplete: function(result){
+                   if(result) {
+                    tempVar = result;
+                    var fstLine = null;
+                    
+                    var lines = null;
+
+                    //小写字母
+                    for (var i = 1; i < 27; i++)
+                    {
+                        var ch = String.fromCharCode(0x60+i);
+                        var attrName = ch + 'A';
+
+                        if (lines == null) {
+                            lines = result[attrName];
+                        }
+
+                        if ( lines != null ) {
+                            break;
+                        }
+                    }
+
+                    //大写字母
+                    for (var i = 1; i < 27; i++)
+                    {
+                        var ch = String.fromCharCode(0x60+i);
+                        ch = ch.toUpperCase();
+                        var attrName = ch + 'A';
+                        if (lines == null) {
+                            lines = result[attrName];
+                        }
+
+                        if ( lines != null ) {
+                            break;
+                        }
+                    }
+
+                    if (lines == null) {
+                        alert("线路获取失败。");
+                        return;
+                    }
+
+                    // if (result.wA != null || result.yA != null) {
+                    //     lines = result.wA;
+                    //     if (lines == null) {
+                    //         lines = result.yA;
+                    //     }
+                    // }   
+                    // else
+                    // {
+                    //     return;
+                    // }
+                    //判断属性名
+                    var attrName = null;
+                    for (var i = 0; i < lines.length; i++) {
+                        if (attrName == null) {
+                            //小写字母
+                            for (var j = 1; j < 27; j++)
+                            {
+                                var ch = String.fromCharCode(0x60+j);
+                                var tmp = ch + 'k';
+
+                                if (lines[i][tmp] != null) {
+                                    attrName = tmp;
+                                    break;
+                                }
+                            }
+
+                            //大写字母
+                            for (var j = 0; j < 27; j++) {
+                                if (attrName != null) {
+                                    break;
+                                }
+                                var ch = String.fromCharCode(0x60+j);
+                                ch = ch.toUpperCase();
+                                var tmp = ch + 'k';
+
+                                if (lines[i][tmp] != null) {
+                                    attrName = tmp;
+                                    break;
+                                }
+                            }
+
+                        }
+
+                        var tmpRid = lines[i][attrName];
+                        // if (rid == tmpRid) {
+                        //     continue;
+                        // }
+                        // else
+                        // {
+                        //     fstLine = result.getBusListItem(i);
+                        //     bdStationListIndex = i+"";
+                        //     rid = tmpRid;
+                        //     break;
+                        // }
+
+                        if (rid == tmpRid) {
+                        	bdStationListIndex = i + "";
+
+                            if (is_reversed == 'yes') {
+
+                                if (bdStationListIndex == 1) {
+                                    bdStationListIndex = 0;
+                                }
+                                else
+                                {
+                                    bdStationListIndex = 1;
+
+                                }
+                                rid = lines[bdStationListIndex][attrName];
+                            }
+
+                            fstLine = result.getBusListItem(bdStationListIndex);
+                        	break;
+                        }
+                    }
+
+
+
+                    //将确定的路线图绘制到地图上，用于获取站点列表  
+                    busline.getBusLine(fstLine);
+                    //
+                    // setTimeout(function(){
+                    //     var list = get_station_list(bdStationListIndex);
+                    //     // alert(list);
+                    //     create_stations_doms(list);
+                    // },1500);
+
+
+                    // var list = null;
+                    // while(true)
+                    // {
+                    //     list = get_station_list(bdStationListIndex);
+                    //     if (list.length > 0) {
+                    //         break;
+                    //     }
+                    // }
+                    // console.log(list);
+                   }
+                },
+                    onBusLineHtmlSet : function(){ 
+                    try
+                    {
+                        // var func = eval('oB');
+                        //为了避免属性名浮动，遍历26个字母
+                        for (var i = 1; i < 27; i++)
+                        {
+                            var ch = String.fromCharCode(0x60+i);
+                            var attrName = ch + 'B';
+                            var list = tempVar[bdStationListIndex][attrName];
+                            if ( list != null ) {
+                                listStationInfos = list;
+                                break;
+                            }
+
+                            //大写字母
+                            ch = ch.toUpperCase();
+                            attrName = ch + 'B';
+                            list = tempVar[bdStationListIndex][attrName];
+                            if (list != null) {
+                                listStationInfos = list;
+                                break;
+                            }
+                        }
+
+                        if (listStationInfos.length == 0) {
+                            alert("获取站点列表失败。");
+                        }
+                        else
+                        {
+                            create_stations_doms(listStationInfos);
+                        }
+                    }
+                    catch(e)
+                    {
+                        alert('获取实时信息失败，请稍后再试。');
+                    }
+                }
+        }); 
+
+        function busSearch(){
+            var busName = key;
+            busline.getBusList(busName);
+        }
+        setTimeout(function(){
+            busSearch();
+        },1500);
+
+        //获取站点列表
+        function get_station_list(bdStationListIndex) {
+            var listSt = [];
+            for (var i = 0; ; i++) {
+                // aStop_0_0
+                var dom_id = 'aStop_' + bdStationListIndex + "_" + i;
+                var sDom = $('#' + dom_id);
+                var html = $('#' + dom_id).html();
+                if (sDom.length > 0) {
+                    listSt.push(sDom.html());
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return listSt;
+        }
+
+        
+
+        function create_stations_doms(listStations) {
+            var space = '<tr>                <th></th>                <td class="road"><img src="res/road-v.png"></td>                <th></th>                <th></th>                <th></th>            </tr>';
+
+            var htmlTable = "";
+            htmlTable += space;
+
+
+            for (var i = listStations.length - 1; i >= 0; i--) {
+                var bid = $.md5(listStations[i].name);
+                var lat = listStations[i].position.lat;
+                var lng = listStations[i].position.lng;
+
+                //字符串截取，为了更好显示
+                var maxLen = 5;
+                var rname = listStations[i].name.length > maxLen ? listStations[i].name.substring(0,maxLen)+".." : listStations[i].name;
+                var item = '<tr id="rowStation_' + i +'">                <td class="station">                    <button id="station_' + i +'" bid="' + bid +'" class="btn btn-info dim btn-large-dim" '+ 'lat="' + lat + '" lng="'+ lng +'" type="button">                        <i class="fa fa-warning"></i>' + rname + '</button>                </td>                <td class="road"></td>                <td class="bus_a"></td>                <td class="bus_b"></td>                <td class="bus_c"></td>            </tr>';
+
+                var betweenSpace = '<tr id="road_' + i + '_' + (i-1) + '">                <th></th>                <td class="road"></td><td class="bus_a"></td>                <td class="bus_b"></td>                <td class="bus_c"></td></tr>';
+
+            //<img src="res/bus-cartoon2.gif">
+            //<img src="res/road-s-v.png">
+            //<img src="res/road-v.png">
+
+                htmlTable += item;
+                htmlTable += betweenSpace;
+            }
+
+            $('#wholeTable').html(htmlTable);
+
+            loadingOver();
+
+            function timer(busDomId){
+                  clearInterval(autoFreshTimer);
+                  autoFreshTimer = window.setInterval(function(){
+                      $('#' + busDomId).click();
+                  }, 10000);
+            }
+
+
+            //点击事件
+            $('.station button').click(function(event) {
+                $('#ruler').hide();
+                var busDomId = $(this).attr('id');
+
+                //如果改变站点，重新开启倒计时。
+                if (busDomId != currBusDomId) {
+                    timer(busDomId);
+                }
+
+                currBusDomId = busDomId;
+                loading_dom(busDomId);
+                
+                
+
+                var bid = $(this).attr('bid');
+                //计算小车所在位置
+                jQuery.ajax({
+                  url: 'http://221.180.145.214/busp/station/query',
+                  type: 'POST',
+                  dataType: 'jsonp',
+                  jsonp: 'jsoncallback',
+                  data: {
+                            lid: rid,
+                            sid: bid,
+                            num: 3,
+                            id:'557d2acde4b0dbac9710d8ed'
+                        },
+                  complete: function(xhr, textStatus) {
+                    //called when complete
+                  },
+                  success: function(data, textStatus, xhr) {
+                    console.log("buses:" + data);
+                    
+
+                    ClearBusRulers();
+                    ClearBuses();
+                    if (data.status == 300) {
+                        //alert('暂无结果');
+                        loadingOver_dom(busDomId);
+                        return;
+                    }
+
+                    for (var i = 0; i < data.lines['0'].list.length; i++) {
+                        // alert( data.lines['0'].list[i].busId);
+                        var lng = data.lines['0'].list[i].lonlat[0];
+                        var lat = data.lines['0'].list[i].lonlat[1];
+                        dis = data.lines['0'].list[i].distance;
+                        cost = data.lines['0'].list[i].cost;
+                            
+                        // if (dis < 5000) {
+                            ShowBus(i,dis,cost,lat, lng);
+                        // }
+                        // alert("lat:" + lat);
+                        // alert("lng:" + lng);
+                    }
+
+                    $('#ruler').show();
+                    $('#ruler').fixRuler($('#' + busDomId));
+                    
+
+                    for (var i = 0; i < data.lines['0'].list.length; i++) {
+                        var bus_alias = "";
+                        if (i == 0 ) {
+                            bus_alias = "bus_a";
+                        }
+                        else if(i == 1)
+                        {
+                            bus_alias = "bus_b";
+                        }
+                        else if(i == 2)
+                        {
+                            bus_alias = "bus_c";
+                        }
+                        $('#bus_ruler_' + i).fixBusRuler($('.' + bus_alias + ' img'));
+                    }
+
+                    
+
+                    loadingOver_dom(busDomId);
+                    //设置bus标尺
+                    // $('#bus_ruler_1').fixBusRuler($('.bus_a img'));
+                    // $('#bus_ruler_2').fixBusRuler($('.bus_b img'));
+                    // $('#bus_ruler_3').fixBusRuler($('.bus_c img'));
+                    // alert( data.lines['0'].list[0].busId);
+                    // alert( data.lines['0'].list[1].busId);
+                    // alert( data.lines['0'].list[2].busId);
+                  },
+                  error: function(xhr, textStatus, errorThrown) {
+                    //called when there is an error
+                  }
+                });
+                
+
+                
+            });
+
+            //初始化选择站点
+            $(".station button[bid='" + sid +"'] ").click();
+            $("html,body").animate({scrollTop:$(".station button[bid='" + sid +"'] ").offset().top - 100},1000);
+
+
+        }
+
+
+        //计算两坐标距离
+        function Rad(d){
+           return d * Math.PI / 180.0;//经纬度转换成三角函数中度分表形式。
+        }
+        //计算距离，参数分别为第一点的纬度，经度；第二点的纬度，经度
+        function GetDistance(lat1,lng1,lat2,lng2){
+     
+            var radLat1 = Rad(lat1);
+            var radLat2 = Rad(lat2);
+            var a = radLat1 - radLat2;
+            var  b = Rad(lng1) - Rad(lng2);
+            var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a/2),2) +
+            Math.cos(radLat1)*Math.cos(radLat2)*Math.pow(Math.sin(b/2),2)));
+            s = s *6378.137 ;// EARTH_RADIUS;
+            s = Math.round(s * 10000) / 10000; //输出为公里
+            //s=s.toFixed(4);
+            return s;
+        }
+
+        function ShowBus(index,dis,cost,lat,lng)
+        {
+            var min_1_dis = 999999;
+            var min_2_dis = 999999;
+            var min_1_index = 0;
+            var min_2_index = 0;
+
+            for (var i = 0; i < listStationInfos.length; i++) {
+                var itemLat = listStationInfos[i].position.lat;
+                var itemLng = listStationInfos[i].position.lng;
+
+                var tempDistance = GetDistance(lat,lng,itemLat,itemLng);
+                if (tempDistance < min_1_dis) {
+                    min_2_dis = min_1_dis;
+                    min_2_index = min_1_index;
+
+                    min_1_dis = tempDistance;
+                    min_1_index = i;
+                }
+            }
+
+            // alert('最近的站：' + listStationInfos[min_1_index].name);
+            // alert('最近的站2：' + listStationInfos[min_2_index].name);
+
+            var bus_alias = "";
+            if (index == 0 ) {
+                bus_alias = "bus_a";
+            }
+            else if(index == 1)
+            {
+                bus_alias = "bus_b";
+            }
+            else if(index == 2)
+            {
+                bus_alias = "bus_c";
+            }
+
+            // for (var i = 0; i < listStationInfos.length; i++) {
+                // if (i == min_1_index) {
+                //     $('#rowStation_' + i + ' .' + bus_alias).html('<img src="res/bus-cartoon2.gif"><br><span>距离:' + dis +'米</span><br><span>耗时:' + cost +'分钟</span>');
+                //     $('#bus_ruler_' +index).fixBusRuler($('.' + bus_alias + ' img'));
+                // }
+
+
+
+                if (min_1_index == 0) {
+                    min_1_index = 1;
+                }
+                var road_id = min_1_index + "_" + min_2_index;
+                var disText = "";
+                if (dis < 1000) {
+                    disText = dis + "米";
+                }
+                else
+                {
+                    disText = (dis/1000).toFixed(1) + "公里";
+                }
+                // alert("road_id:" + road_id);
+                $('#road_' + road_id + ' .' + bus_alias).html('<img src="res/bus-cartoon2.gif"><br><span>距' + disText +'</span><br><span>约' + cost +'分钟</span>');
+                // $('#road_' + road_id + ' .' + bus_alias).html('<img src="res/bus-cartoon2.gif">');
+
+
+                
+
+
+
+
+            // }
+        }
+
+        function ClearBuses()
+        {
+            for (var i = 0; i < listStationInfos.length; i++) {
+                $('.bus_a').html(' ');
+                $('.bus_b').html(' ');
+                $('.bus_c').html(' ');
+            }
+        }
+
+        function ClearBusRulers()
+        {
+            for (var i = 0; i < 3; i++) {
+                $('#bus_ruler_' + i ).hide();
+            }
+        }
+
+        function loading_dom(dom_id) {
+            // body...
+            $('#' + dom_id).css('opacity', '0.6');
+            $('#' + dom_id).waitMe({
+            effect: 'win8',
+            text: '',
+            bg: 'rgba(255,255,255,0)',
+            color:'#000',
+            sizeW:'100',
+            sizeH:'100',
+            source: 'js/plugins/waitMe/img/img.svg'
+          });
+        }
+
+        function loadingOver_dom(dom_id) {
+            $('#' + dom_id).css('opacity', '1');
+            $('#' + dom_id).waitMe('hide');
+        }
+
+
+        function loading() {
+            // body...
+            $('body').css('opacity', '0.6');
+            $('body').waitMe({
+            effect: 'win8',
+            text: '',
+            bg: 'rgba(255,255,255,0)',
+            color:'#000',
+            sizeW:'100',
+            sizeH:'100',
+            source: 'js/plugins/waitMe/img/img.svg'
+          });
+        }
+
+        function loadingOver() {
+            $('body').css('opacity', '1');
+            $('body').waitMe('hide');
+        }
+
+
+
+        
+
+        
+
+        
+
+
+
+
+    </script>
+</body>
+
+</html>

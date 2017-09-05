@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>我的收藏</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=0">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+
+<link href="base.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="QueryBus.css">
+<link rel="stylesheet" type="text/css" href="./lib/toastr.css">
+</head>
+<body>
+    <div id="navigation_header">
+    	<img class="back" src="./images/back.png"/>
+    	<p class="title">我的收藏</p>
+        <div class="bottomline"></div>
+    </div>
+
+    <ul id="bus_list">
+    	<!-- <li class="bus_li">
+            <p class="bus">150站</p>
+            <span>
+                <img class="star" src="./images/star_full.png">
+            </span>
+            <div class="bus_list_item_bottom_container">
+                <p class="bottom_text station">1站</p>
+                <p class="bottom_text distance">141米</p>
+                <p class="bottom_text minute"><a>2</a>分</p>
+            </div>
+            <div class="clearfloat"/>
+            <div class="separator"/>
+        </li> -->
+        <!-- <li class="bus_li">
+            <p class="bus">150路</p>
+            <span>
+                <img class="star" src="./images/star_full.png">
+            </span>
+            <div class="bus_list_item_bottom_container">
+                <p class="bottom_text station" style="font-size: 14px;">彩霞街公铁桥</p>
+            </div>
+            <div class="clearfloat"/>
+            <div class="separator"/>
+        </li>
+        <li class="bus_li">
+            <p class="bus">154路</p>
+            <span>
+                <img class="star" src="./images/star_full.png">
+            </span>
+            <div class="bus_list_item_bottom_container">
+                <p class="bottom_text station" style="font-size: 14px;">彩霞街公铁桥</p>
+            </div>
+            <div class="clearfloat"/>
+            <div class="separator"/>
+        </li>
+        <li class="bus_li">
+            <p class="bus">188路</p>
+            <span>
+                <img class="star" src="./images/star_full.png">
+            </span>
+            <div class="bus_list_item_bottom_container">
+                <p class="bottom_text station" style="font-size: 14px;">彩霞街公铁桥</p>
+            </div>
+            <div class="clearfloat"/>
+            <div class="separator"/>
+        </li> -->
+    </ul>
+
+    <script type="text/javascript" src="./lib/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="./lib/spin.js"></script>
+    <script type="text/javascript" src="./lib/jquery.md5.js"></script>
+    <script type="text/javascript" src="./lib/native-tool.js"></script>
+    <script type="text/javascript" src="./lib/toastr.min.js"></script>
+    <script type="text/javascript" src="./lib/favorate.js"></script>
+    <script type="text/javascript" src="./lib/tool.js"></script>
+    <script>
+        var cityid = window.localStorage.getItem('zhcx_cid');
+        var param = parseURL();
+
+        window.onload = function() {
+            // var sid = param["sid"];
+            
+            $('.back').click(function() 
+            {
+                window.history.back(-1); 
+            });
+
+            syncFavorateList({
+                cityid: cityid,
+                complete: function() {
+                    native_showLoginScene("请登录");
+                },
+                success: function(data) {
+                    if (data.success == "1") 
+                    {
+                        //填充收藏列表到页面
+                        var htmlList = "";
+                        for (var i = 0; i < data.fav_list.length; i++) {
+                            var line_id = data.fav_list[i].line_id;
+                            var station_id = data.fav_list[i].station_id;
+                            var line_name = data.fav_list[i].line_name;
+                            var station_name = data.fav_list[i].station_name;
+
+                            var htmlItem = '<li class="bus_li">            <p class="bus">' + line_name + '</p>            <span>                <img class="star" src="./images/star_full.png">            </span>            <div class="bus_list_item_bottom_container">                <p class="bottom_text station" style="font-size: 14px;">' + station_name + '</p>            </div>            <div class="clearfloat"/>            <div class="separator"/>        </li>';
+
+                            htmlList += htmlItem;
+                        }
+                        $('#bus_list').html(htmlList);
+
+                        //列表显示后，绑定点击事件
+                        bind_events();
+                    } 
+                    else if (data.success == "2") 
+                    {
+                        //token失效，跳转至登录页
+                        native_showLoginScene(data.msg);
+                    }
+                    else 
+                    {
+                        //其他错误
+                        // alert('other error');
+                        toastr.success('data.msg');
+                        // native_showLoginScene();
+                    }
+                },
+                error: function(errorThrown) {
+                    alert("error:"+errorThrown);
+                }
+            });
+        }
+
+        function bind_events() {
+            bind_li_click();
+            bind_star_click();
+        }
+
+        function bind_li_click() {
+            //线路item点击事件
+            $('li').click(function() {
+                var fav_list = JSON.parse(localStorage.favorateList);
+                var index = $(this).index();
+                var item = fav_list[index];
+
+                var lid = item.line_id;
+                var sid = item.station_id;
+                // var station_name = item.station_name;
+
+                var name = item.line_name;
+                // var shortName = name.substring(0,name.indexOf('('));
+                var shortName = item.line_short_name;
+
+                var reverse = "no";
+
+                //百度搜索108路时搜不到，108能搜到
+                if (shortName == "108路") {
+                    shortName = "108";
+                }
+
+                sessionStorage.shortName = shortName;
+                sessionStorage.name = name;
+
+                window.location.href='xiaoche/?lid=' + lid + '&sid=' + sid + '&reverse=' + reverse;
+            });
+        }
+
+        function bind_star_click() {
+            //收藏按钮绑定事件
+            $('.star').click(function(event) {
+                event.stopPropagation(); 
+
+                var thisStar = $(this);
+
+                //获取点击的item
+                var fav_list = JSON.parse(localStorage.favorateList);
+                var li = $(this).parents(".bus_li")[0];
+                var index = $(li).index();
+                var item = fav_list[index];
+
+
+                //通过item获取相应参数值
+                var lid = item.line_id;
+                var sid = item.station_id;
+                var lname = item.line_name;
+                var sname = item.station_name;
+                var l_shortName = item.line_short_name;
+
+
+                favorate({
+                    cityid: cityid,
+                    lid: lid,
+                    sid: sid,
+                    lname: lname,
+                    sname: sname,
+                    line_short_name: l_shortName,
+                    success: function(bt) {
+                        // if (bt == "1")
+                        // {    
+                        //     $(thisStar).attr('src','./images/star_empty.png');
+                        // } 
+                        // else 
+                        // {
+                        //     $(thisStar).attr('src','./images/star_full.png');
+                        // }
+                        window.location.reload();
+                    },
+                    error: function(errorThrown) {
+                        alert("error:"+errorThrown);
+                    }
+                })
+            });
+        }
+    </script>
+</body>
+</html>
